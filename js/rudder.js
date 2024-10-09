@@ -1,20 +1,21 @@
 // This function executes when a user loads the sign up page
 function signupPageViewed() {
 
-	// Set a 'Signup Page Views' count Super Property
-	var pagesViewed = mixpanel.get_property('Signup Page Views (Session)')
+	// Mixpanel library code
+	// // Set a 'Signup Page Views' count Super Property
+	// var pagesViewed = mixpanel.get_property('Signup Page Views (Session)')
 
-	if (pagesViewed !== 'undefined') {
-		mixpanel.register_once({
-			"Signup Page Views (Session)": 1
-		});
-	} else {
-		mixpanel.register({
-			"Signup Page Views (Session)": pagesViewed + 1
-		});
-	}
+	// if (pagesViewed !== 'undefined') {
+	// 	mixpanel.register_once({
+	// 		"Signup Page Views (Session)": 1
+	// 	});
+	// } else {
+	// 	mixpanel.register({
+	// 		"Signup Page Views (Session)": pagesViewed + 1
+	// 	});
+	// }
 
-	mixpanel.track("Viewed Signup Page");
+	// mixpanel.track("Viewed Signup Page");
 }
 
 // This function executes after a user successfully signs up
@@ -22,7 +23,20 @@ function signupPageViewed() {
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
 
-	mixpanel.identify(user.id);
+	// mixpanel.identify(user.id);
+	rudderanalytics.identify(
+	  user.id, {
+	    $name: "user.name",
+	    lastName: "Keener",
+	    $email: "alex@example.com",
+	    $phone: "+1-202-555-0146"
+	  },
+	  () => {
+	    console.log("Identify event successfully submitted to the RudderStack SDK.");
+	  }
+	);
+
+
 
 	const currentDate = new Date();
 	const timestamp = currentDate.toISOString();
